@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<head>
+    <title>D-Day</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        .li-div{
+            display: inline-block;
+            width: 8rem;
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+            border-right: 1px solid rgba(0,0,0,.125);
+            margin-top: -.75rem;
+            margin-bottom: -.75rem;
+        }
+        .font-weight-bold{
+            padding-left: .75rem;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 class="p-3 mb-3 bg-info text-light text-center">병역복무</h1>
+    <div class="container">
+        <ul class="list-group">
+
+            <li class="list-group-item"><div class="li-div"><span>시작일 </span></div><span id="start-day" class="font-weight-bold"></span></li>
+            <li class="list-group-item"><div class="li-div"><span>종료일 </span></div><span id="end-day" class="font-weight-bold"></span></li>
+            <li class="list-group-item"><div class="li-div"><span>금  일 </span></div><span id="now-day" class="font-weight-bold"></span></li>
+            <li class="list-group-item"><div class="li-div"><span>총 복무일 </span></div><span id="total-day" class="font-weight-bold"></span></li>
+            <li class="list-group-item"><div class="li-div"><span>남은 복무일 </span></div><span id="rem-day" class="font-weight-bold"></span></li>
+            <li class="list-group-item">
+                <div class="progress">
+                    <div id="day-progress" class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </li>
+            <li class="list-group-item"><div class="li-div"><span>진도율 </span></div><span id="per" class="font-weight-bold"></span></li>
+        </ul>
+    </div>
+
+    <script>
+        const start = '2017-05-02';
+        const end = '2020-03-01';
+
+        const rtn_ymd = day => {
+            return day.getFullYear()+'년 '+(day.getMonth()+1)+'월 '+day.getDate()+'일';
+        }
+        const rtn_day = (now, end) => {
+            let gap = now.getTime() - end.getTime();
+            return Math.floor(gap / (1000 * 60 * 60 * 24)) * -1;
+        }
+        const get_id = id => {
+            return document.getElementById(id);
+        }
+
+        const now = new Date();
+        const s_day = new Date(start+'T00:00:00');
+        const e_day = new Date(end+'T00:00:00');
+
+        const tot_day = rtn_day(s_day,e_day);
+        const remining_day = rtn_day(now,e_day);
+
+        console.log(now.getFullYear());
+
+        let total = remining_day / tot_day * 100;
+        total = 100 - total;
+
+
+        get_id('start-day').innerHTML = rtn_ymd(s_day);
+        get_id('end-day').innerHTML = rtn_ymd(e_day);
+        get_id('now-day').innerHTML = rtn_ymd(now);
+        
+        get_id('day-progress').style.width = total + '%';
+        get_id('total-day').innerHTML = tot_day + '일';
+        get_id('rem-day').innerHTML = remining_day + '일';
+        get_id('per').innerHTML = total + '%';
+    </script>
+</body>
