@@ -27,7 +27,9 @@
             <li class="list-group-item"><div class="li-div"><span>종료일 </span></div><span id="end-day" class="font-weight-bold"></span></li>
             <li class="list-group-item"><div class="li-div"><span>금  일 </span></div><span id="now-day" class="font-weight-bold"></span></li>
             <li class="list-group-item"><div class="li-div"><span>총 복무일 </span></div><span id="total-day" class="font-weight-bold"></span></li>
+            <li class="list-group-item"><div class="li-div"><span>남은 시간 </span></div><span id="rem-time" class="font-weight-bold"></span></li>
             <li class="list-group-item"><div class="li-div"><span>남은 복무일 </span></div><span id="rem-day" class="font-weight-bold"></span></li>
+            <li class="list-group-item"><div class="li-div"><span>남은 복무주일 </span></div><span id="rem-week" class="font-weight-bold"></span></li>
             <li class="list-group-item">
                 <div class="progress">
                     <div id="day-progress" class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
@@ -59,6 +61,8 @@
         const tot_day = rtn_day(s_day,e_day);
         const remining_day = rtn_day(now,e_day);
 
+        const remining_time = remining_day * 24;
+
         console.log(now.getFullYear());
 
         let total = remining_day / tot_day * 100;
@@ -71,7 +75,10 @@
         
         get_id('day-progress').style.width = total + '%';
         get_id('total-day').innerHTML = tot_day + '일';
+        get_id('rem-time').innerHTML = '약 ' + remining_time + '시간';
         get_id('rem-day').innerHTML = remining_day + '일';
+        get_id('rem-week').innerHTML = parseInt(remining_day/7) + '주 ' + remining_day%7 + '일';
+        
         get_id('per').innerHTML = total + '%';
     </script>
 </body>
